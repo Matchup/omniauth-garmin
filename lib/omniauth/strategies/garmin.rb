@@ -14,7 +14,8 @@ module OmniAuth
         site: (ENV['GARMIN_CONNECT_API_URL'] || 'http://connectapitest.garmin.com'),
         request_token_path: '/oauth-service-1.0/oauth/request_token',
         access_token_path: '/oauth-service-1.0/oauth/access_token',
-        authorize_url: (ENV['GARMIN_CONNECT_URL'] || 'http://connecttest.garmin.com') + '/oauthConfirm'
+        authorize_url: (ENV['GARMIN_CONNECT_URL'] || 'http://connecttest.garmin.com') + '/oauthConfirm',
+        request_params: 'http://localhost:3000'
       }
 
       uid do
