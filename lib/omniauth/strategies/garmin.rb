@@ -42,7 +42,7 @@ module OmniAuth
 
         if request_token.callback_confirmed?
           p "in callback_confirmed?"
-          redirect request_token.authorize_url(options[:authorize_params])
+          redirect request_token.authorize_url(options[:authorize_params].merge(:oauth_callback => callback_url))
         else
           p "not in callback_confirmed?"
           redirect request_token.authorize_url(options[:authorize_params].merge(:oauth_callback => callback_url))
