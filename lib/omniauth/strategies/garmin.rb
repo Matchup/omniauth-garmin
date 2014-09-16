@@ -15,7 +15,7 @@ module OmniAuth
         request_token_path: '/oauth-service-1.0/oauth/request_token',
         access_token_path: '/oauth-service-1.0/oauth/access_token',
         authorize_url: (ENV['GARMIN_CONNECT_URL'] || 'http://connecttest.garmin.com') + '/oauthConfirm',
-        request_params: 'http://localhost:3000'
+        request_params: 'http://localhost:3000',
       }
 
       uid do
@@ -32,13 +32,19 @@ module OmniAuth
       def request_phase
         p "in request_phase"
 
-        request_token = consumer.get_request_token({:oauth_callback => "http://localhost:3000" }, options.request_params)
+        request_token = consumer.get_request_token({:oauth_callback => "http://127.0.0.1:3000", redirect_uri: "http://127.0.0.1:3000" }, options.request_params)
+        p "returned from request"
+
         session['oauth'] ||= {}
         session['oauth'][name.to_s] = {'callback_confirmed' => request_token.callback_confirmed?, 'request_token' => request_token.token, 'request_secret' => request_token.secret}
 
+        callback_url = "http://127.0.0.1:3000"
+
         if request_token.callback_confirmed?
+          p "in callback_confirmed?"
           redirect request_token.authorize_url(options[:authorize_params])
         else
+          p "not in callback_confirmed?"
           redirect request_token.authorize_url(options[:authorize_params].merge(:oauth_callback => callback_url))
         end
 
