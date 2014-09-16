@@ -5,6 +5,8 @@ module OmniAuth
   module Strategies
     class Garmin < OmniAuth::Strategies::OAuth
 
+      p "class level variables"
+
       option :name, "garmin"
 
       option :client_options, {
@@ -27,6 +29,8 @@ module OmniAuth
 
 
       def request_phase
+        p "in request_phase"
+
         request_token = consumer.get_request_token({:oauth_callback => "http://localhost:3000" }, options.request_params)
         session['oauth'] ||= {}
         session['oauth'][name.to_s] = {'callback_confirmed' => request_token.callback_confirmed?, 'request_token' => request_token.token, 'request_secret' => request_token.secret}
@@ -45,6 +49,8 @@ module OmniAuth
 
 
       def consumer
+        p "in consumer"
+
         consumer = GarminConsumer.new(options.consumer_key, options.consumer_secret, options.client_options)
         consumer.http.open_timeout = options.open_timeout if options.open_timeout
         consumer.http.read_timeout = options.read_timeout if options.read_timeout
