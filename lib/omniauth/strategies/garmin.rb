@@ -38,7 +38,7 @@ module OmniAuth
         session['oauth'] ||= {}
         session['oauth'][name.to_s] = {'callback_confirmed' => request_token.callback_confirmed?, 'request_token' => request_token.token, 'request_secret' => request_token.secret}
 
-        callback_url = "http://127.0.0.1:3000"
+        callback_url = "http://127.0.0.1:3000/auth/garmin"
 
         if request_token.callback_confirmed?
           p "in callback_confirmed?"
