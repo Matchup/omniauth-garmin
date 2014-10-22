@@ -26,27 +26,25 @@ module OmniAuth
       end
 
 
-      # def request_phase
-      #   request_token = consumer.get_request_token({}, options.request_params)
+      def request_phase
+        request_token = consumer.get_request_token({}, options.request_params)
 
-      #   session['oauth'] ||= {}
-      #   session['oauth'][name.to_s] = {'callback_confirmed' => request_token.callback_confirmed?, 'request_token' => request_token.token, 'request_secret' => request_token.secret}
+        session['oauth'] ||= {}
+        session['oauth'][name.to_s] = {'callback_confirmed' => request_token.callback_confirmed?, 'request_token' => request_token.token, 'request_secret' => request_token.secret}
 
-      #   callback_url = "http://127.0.0.1:3000/auth/garmin/callback"
+        callback_url = ENV['GARMIN_CALLBACK_URL']
 
-      #   if request_token.callback_confirmed?
-      #     p "in callback_confirmed?"
-      #     redirect request_token.authorize_url(options[:authorize_params].merge(:oauth_callback => callback_url))
-      #   else
-      #     p "not in callback_confirmed?"
-      #     redirect request_token.authorize_url(options[:authorize_params].merge(:oauth_callback => callback_url))
-      #   end
+        if request_token.callback_confirmed?
+          redirect request_token.authorize_url(options[:authorize_params].merge(:oauth_callback => callback_url))
+        else
+          redirect request_token.authorize_url(options[:authorize_params].merge(:oauth_callback => callback_url))
+        end
 
-      # rescue ::Timeout::Error => e
-      #   fail!(:timeout, e)
-      # rescue ::Net::HTTPFatalError, ::OpenSSL::SSL::SSLError => e
-      #   fail!(:service_unavailable, e)
-      # end
+      rescue ::Timeout::Error => e
+        fail!(:timeout, e)
+      rescue ::Net::HTTPFatalError, ::OpenSSL::SSL::SSLError => e
+        fail!(:service_unavailable, e)
+      end
 
 
 
