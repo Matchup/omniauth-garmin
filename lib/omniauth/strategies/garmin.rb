@@ -5,8 +5,6 @@ module OmniAuth
   module Strategies
     class Garmin < OmniAuth::Strategies::OAuth
 
-      p "class level variables"
-
       option :name, "garmin"
 
       option :client_options, {
@@ -14,8 +12,7 @@ module OmniAuth
         site: (ENV['GARMIN_CONNECT_API_URL'] || 'http://connectapitest.garmin.com'),
         request_token_path: '/oauth-service-1.0/oauth/request_token',
         access_token_path: '/oauth-service-1.0/oauth/access_token',
-        authorize_url: (ENV['GARMIN_CONNECT_URL'] || 'http://connecttest.garmin.com') + '/oauthConfirm',
-        request_params: 'http://localhost:3000',
+        authorize_url: (ENV['GARMIN_CONNECT_URL'] || 'http://connecttest.garmin.com') + '/oauthConfirm'
       }
 
       uid do
@@ -30,10 +27,7 @@ module OmniAuth
 
 
       def request_phase
-        p "in request_phase"
-
-        request_token = consumer.get_request_token({:oauth_callback => "http://127.0.0.1:3000", redirect_uri: "http://127.0.0.1:3000" }, options.request_params)
-        p "returned from request"
+        request_token = consumer.get_request_token({}, options.request_params)
 
         session['oauth'] ||= {}
         session['oauth'][name.to_s] = {'callback_confirmed' => request_token.callback_confirmed?, 'request_token' => request_token.token, 'request_secret' => request_token.secret}
