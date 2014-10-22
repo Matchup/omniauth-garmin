@@ -1,6 +1,5 @@
 # Omniauth::Garmin
 
-TODO: Write a gem description
 
 ## Installation
 
@@ -18,7 +17,11 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+Set the GARMIN_CALLBACK_URL environment variable for the callback location.
+I.e. for local development, you'll want to use soemthing like: 
+export GARMIN_CALLBACK_URL="http://127.0.0.1:3000/auth/garmin/callback"
+
+In production, you'll want to replace this with your host environment. 
 
 ## Contributing
 
