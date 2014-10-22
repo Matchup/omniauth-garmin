@@ -49,26 +49,27 @@ module OmniAuth
       end
 
 
-      def consumer
-        p "in consumer"
+    #   def consumer
+    #     p "in consumer"
 
-        consumer = GarminConsumer.new(options.consumer_key, options.consumer_secret, options.client_options)
-        consumer.http.open_timeout = options.open_timeout if options.open_timeout
-        consumer.http.read_timeout = options.read_timeout if options.read_timeout
-        consumer
-      end
+    #     consumer = GarminConsumer.new(options.consumer_key, options.consumer_secret, options.client_options)
+    #     consumer.http.open_timeout = options.open_timeout if options.open_timeout
+    #     consumer.http.read_timeout = options.read_timeout if options.read_timeout
+    #     consumer
+    #   end
 
-      class GarminConsumer < ::OAuth::Consumer
-        protected
+    #   class GarminConsumer < ::OAuth::Consumer
+    #     protected
 
-        def create_http_request(*params)
-          req = super
-          if ENV['GARMIN_USERNAME']
-            req.basic_auth ENV['GARMIN_USERNAME'], ENV['GARMIN_PASSWORD']
-          end
-          req
-        end
-      end
+    #     def create_http_request(*params)
+    #       req = super
+    #       if ENV['GARMIN_USERNAME']
+    #         req.basic_auth ENV['GARMIN_USERNAME'], ENV['GARMIN_PASSWORD']
+    #       end
+    #       req
+    #     end
+    #   end
+
     end
   end
 end
